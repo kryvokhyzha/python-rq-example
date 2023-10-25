@@ -1,6 +1,8 @@
-# python-eq example
+# python-rq example
 
-This is an example of using the `redis queue` with `FastAPI` backend.
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
+This is an example of using the `Redis Queue` with `FastAPI` backend.
 
 ## Setup development environment
 
