@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  redis:
+    container_name: redis
+    hostname: redis
+    image: redis:latest
+    command: --port 6379
+    ports:
+      - "6379:6379"
+    expose:
+      - "6379"
+    restart: always
+
+  backend:
+    container_name: backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "5057:5057"
+    working_dir: /usr/src/backend
+    links:
+      - redis
+    depends_on:
+      - redis
+    command: uvicorn backend.src.api:app --host 0.0.0.0 --port 5057
+
+  redis_worker:
+    container_name: redis_worker
+    build:
+      context: .
+      dockerfile: worker/Dockerfile
+    working_dir: /usr/src/workers
+    links:
+      - redis
+    depends_on:
+      - redis
+
+  redis_dashboard:
+    container_name: redis_dashboard
+    build:
+      context: .
+      dockerfile: dashboard/Dockerfile
+    ports:
+      - "9181:9181"
+    expose:
+      - "9181"
+    working_dir: /usr/src/dashboard
+    links:
+      - redis
+    depends_on:
+      - redis
+    command: rq-dashboard -u redis://redis:6379 -p 9181
