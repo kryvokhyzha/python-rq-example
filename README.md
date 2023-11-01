@@ -15,11 +15,15 @@ This is an example of using the `Redis Queue` with `FastAPI` backend.
 5. Install poetry using instructions from
    [here](https://python-poetry.org/docs/#installation). Use
    `with the official installer` section.
-6. Install dependencies using `poetry install --no-root` command. The
+6. Set the following option to disable new virtualenv creation:
+   ```bash
+   poetry config virtualenvs.create false
+   ```
+7. Install dependencies using `poetry install --no-root` command. The
    `--no-root` flag is needed to avoid installing the package itself.
-7. Setup `pre-commit` hooks using `pre-commit install` command. More information
+8. Setup `pre-commit` hooks using `pre-commit install` command. More information
    about `pre-commit` you can find [here](https://pre-commit.com/).
-8. Run the test to check the correctness using following command:
+9. Run the test to check the correctness using following command:
    ```bash
    python -m unittest -b
    ```
